@@ -5,7 +5,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+app.get("/spreadsheet", (req, res) => {
   res.render("index.ejs");
 });
 //const spreadsheetId = "1L8ALAmG11nCy5pHUcu05NkM_eLSvWCLpjV_vSp7dg1o";
@@ -36,7 +36,7 @@ app.get("/spreadsheet/:spreadsheetId", async (req, res) => {
 
 });
 
-app.post("/", async (req, res) => {
+app.post("/spreadsheet", async (req, res) => {
   const { request, name } = req.body;
 
   const auth = new google.auth.GoogleAuth({
@@ -65,7 +65,6 @@ app.post("/", async (req, res) => {
 
   res.send("Successfully submitted! Thank you!");
 });
-
 
 
 app.listen(8050, (req, res) => console.log("running on 8050"));
