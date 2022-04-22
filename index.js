@@ -8,7 +8,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/spreadsheet", (req, res) => {
   res.render("index.ejs");
 });
-//const spreadsheetId = "1L8ALAmG11nCy5pHUcu05NkM_eLSvWCLpjV_vSp7dg1o";
+
+//Recieve spreadsheetId from api endpoint
 
 app.get("/spreadsheet/:spreadsheetId", async (req, res) => {
 
@@ -24,15 +25,13 @@ app.get("/spreadsheet/:spreadsheetId", async (req, res) => {
   // Instance of Google Sheets API
   const googleSheets = google.sheets({ version: "v4", auth: client });
 
-  //const spreadsheetId = "1L8ALAmG11nCy5pHUcu05NkM_eLSvWCLpjV_vSp7dg1o";
-
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
     range: "Sheet1",
   });
 
-  res.send(getRows.data);
+  res.send(getRows.data);  // get the data of google sheet
 
 });
 
@@ -44,7 +43,7 @@ app.post("/spreadsheet", async (req, res) => {
     scopes: "https://www.googleapis.com/auth/spreadsheets",
   });
 
-  // Create client instance for auth
+  //  client instance for auth
   const client = await auth.getClient();
 
   // Instance of Google Sheets API
@@ -59,7 +58,7 @@ app.post("/spreadsheet", async (req, res) => {
     range: "Sheet1!A:B",
     valueInputOption: "RAW",
     resource: {
-      values: [[request,name]],
+      values: [[request,name]],   //recieve from frontend HTML form
     },
   });
 
